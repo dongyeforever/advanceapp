@@ -1,6 +1,5 @@
 package tk.dongye.advanceapp.ui;
 
-import android.app.usage.UsageEvents;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -16,7 +15,6 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import tk.dongye.advanceapp.R;
-import tk.dongye.advanceapp.util.LogUtil;
 
 /**
  * description:
