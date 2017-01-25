@@ -26,7 +26,13 @@ public class BinderPoolAty extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        doWork();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                doWork();
+            }
+        }).start();
     }
 
     private void doWork() {

@@ -28,7 +28,7 @@
             </intent-filter>
         </service>
         <service
-            android:name=".aidl.BinderPoolService"
+            android:name="tk.dongye.advanceapp.aidl.BinderPoolService"
             android:process=":bindpool" />
     </application>
 
