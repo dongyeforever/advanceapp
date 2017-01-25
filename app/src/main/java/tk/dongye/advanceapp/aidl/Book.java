@@ -41,6 +41,8 @@ public class Book implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(bookId);
+        out.writeString(bookName);
     }
 
     @Override
