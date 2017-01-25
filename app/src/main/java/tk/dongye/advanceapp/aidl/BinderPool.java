@@ -55,6 +55,7 @@ public class BinderPool {
         IBinder binder = null;
         try {
             if (iBinderPool != null) {
+                LogUtil.e(iBinderPool + "------------------" + binderCode);
                 binder = iBinderPool.queryBinder(binderCode);
             }
         } catch (RemoteException e) {
@@ -64,6 +65,7 @@ public class BinderPool {
     }
 
     private ServiceConnection binderPoolConnection = new ServiceConnection() {
+
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             iBinderPool = IBinderPool.Stub.asInterface(iBinder);
@@ -77,7 +79,7 @@ public class BinderPool {
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-
+            LogUtil.e("onServiceDisconnected");
         }
     };
 
@@ -91,26 +93,4 @@ public class BinderPool {
         }
     };
 
-    public static class BinderPoolImpl extends IBinderPool.Stub {
-        public BinderPoolImpl() {
-            super();
-        }
-
-        @Override
-        public IBinder queryBinder(int binderCode) throws RemoteException {
-            LogUtil.e(binderCode + "...");
-            IBinder binder = null;
-            switch (binderCode) {
-                case BINDER_SECURITY_CENTER:
-                    binder = new SecurityCenterImpl();
-                    break;
-                case BINDER_COMPUTE:
-                    binder = new ComputeImpl();
-                    break;
-                default:
-                    break;
-            }
-            return binder;
-        }
-    }
 }

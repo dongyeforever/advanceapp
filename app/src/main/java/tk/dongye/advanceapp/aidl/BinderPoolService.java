@@ -14,19 +14,18 @@ import tk.dongye.advanceapp.util.LogUtil;
  * date: 2017-01-25 10:56
  */
 public class BinderPoolService extends Service {
-    private Binder binderPool ;
+    private Binder binderPool = new BinderPoolImpl();
 
     @Override
     public void onCreate() {
         super.onCreate();
-        binderPool = new BinderPool.BinderPoolImpl();
-        LogUtil.e(binderPool.toString());
+        LogUtil.e(binderPool.getClass().toString());
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        LogUtil.d("onBind");
+        LogUtil.d("onBind " + binderPool);
         return binderPool;
     }
 
