@@ -39,18 +39,15 @@ public class BinderPoolAty extends AppCompatActivity {
         BinderPool binderPool = BinderPool.getInstance(this);
         IBinder securityBinder = binderPool.queryBinder(BinderPool.BINDER_SECURITY_CENTER);
         ISecurityCenter securityCenter = SecurityCenterImpl.asInterface(securityBinder);
-        LogUtil.d("visit ISecurityCenter");
         String msg = "hello-world-安卓";
-        System.out.println("count: " + msg);
         try {
             String passwd = securityCenter.encrypt(msg);
-            System.out.println("encrypt: " + passwd);
-            System.out.println("decrypt: " + securityCenter.decrypt(passwd));
+            LogUtil.i("encrypt: " + passwd);
+            LogUtil.i("decrypt: " + securityCenter.decrypt(passwd));
         } catch (RemoteException e) {
             e.printStackTrace();
         }
 
-        LogUtil.d("visit ICompute");
         IBinder computeBinder = binderPool.queryBinder(BinderPool.BINDER_COMPUTE);
         ICompute compute = ComputeImpl.asInterface(computeBinder);
         try {

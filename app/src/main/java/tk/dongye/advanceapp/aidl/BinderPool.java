@@ -7,6 +7,8 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
 
+import java.util.concurrent.CountDownLatch;
+
 import tk.dongye.advanceapp.util.LogUtil;
 
 /**
@@ -22,7 +24,7 @@ public class BinderPool {
     private Context context;
     private IBinderPool iBinderPool;
     private static volatile BinderPool sInstance;
-//    private CountDownLatch connectBinderPoolCountDownLatch;
+    private CountDownLatch connectBinderPoolCountDownLatch;
 
     private BinderPool(Context context) {
         this.context = context.getApplicationContext();
@@ -41,21 +43,21 @@ public class BinderPool {
     }
 
     private synchronized void connectBinderPoolService() {
-//        connectBinderPoolCountDownLatch = new CountDownLatch(1);
+        connectBinderPoolCountDownLatch = new CountDownLatch(1);
         Intent service = new Intent(context, BinderPoolService.class);
+
         context.bindService(service, binderPoolConnection, Context.BIND_AUTO_CREATE);
-//        try {
-//            connectBinderPoolCountDownLatch.await();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            connectBinderPoolCountDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public IBinder queryBinder(int binderCode) {
         IBinder binder = null;
         try {
             if (iBinderPool != null) {
-                LogUtil.e(iBinderPool + "------------------" + binderCode);
                 binder = iBinderPool.queryBinder(binderCode);
             }
         } catch (RemoteException e) {
@@ -69,12 +71,12 @@ public class BinderPool {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             iBinderPool = IBinderPool.Stub.asInterface(iBinder);
-//            try {
-//                iBinderPool.asBinder().linkToDeath(binderPoolDeathRecipient, 0);
-//            } catch (RemoteException e) {
-//                e.printStackTrace();
-//            }
-//            connectBinderPoolCountDownLatch.countDown();
+            try {
+                iBinderPool.asBinder().linkToDeath(binderPoolDeathRecipient, 0);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            connectBinderPoolCountDownLatch.countDown();
         }
 
         @Override
