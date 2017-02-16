@@ -13,7 +13,6 @@ import tk.dongye.advanceapp.util.LogUtil;
 public class BinderPoolImpl extends IBinderPool.Stub {
     @Override
     public IBinder queryBinder(int binderCode) throws RemoteException {
-        LogUtil.e(binderCode + "...");
         IBinder binder = null;
         switch (binderCode) {
             case BinderPool.BINDER_SECURITY_CENTER:
