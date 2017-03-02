@@ -9,15 +9,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.BinderPoolAty">
+
+        </activity>
+        <activity android:name=".ui.SurfaceViewAty" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.ServiceActivity" />
+        <activity android:name=".view.ViewBaseActivity" />
+        <!-- View滑动冲突 -->
+        <activity android:name=".view.ViewScrollDemo" />
+
+        <!-- 大图加载 -->
+        <activity android:name=".ui.BitmapRegionDecoderAty">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.SurfaceViewAty" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ui.ServiceActivity" />
 
         <service
             android:name=".aidl.MyService"
