@@ -1,12 +1,11 @@
-package tk.dongye.advanceapp.view.imageview.decoder;
+package tk.dongye.advanceapp.view.image.sampling.decoder;
 
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.graphics.*;
-import android.graphics.Bitmap.Config;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.text.TextUtils;
 
@@ -14,23 +13,23 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * Default implementation of {@link com.davemorrissey.labs.subscaleview.decoder.ImageRegionDecoder}
- * using Android's {@link BitmapRegionDecoder}, based on the Skia library. This
- * works well in most circumstances and has reasonable performance due to the cached decoder instance,
- * however it has some problems with grayscale, indexed and CMYK images.
+ * Default implementation of {@link com.davemorrissey.labs.subscaleview.decoder.ImageDecoder}
+ * using Android's {@link BitmapFactory}, based on the Skia library. This
+ * works well in most circumstances and has reasonable performance, however it has some problems
+ * with grayscale, indexed and CMYK images.
  */
-public class SkiaImageRegionDecoder implements ImageRegionDecoder {
-
-    private BitmapRegionDecoder decoder;
-    private final Object decoderLock = new Object();
+public class SkiaImageDecoder implements ImageDecoder {
 
     private static final String FILE_PREFIX = "file://";
     private static final String ASSET_PREFIX = FILE_PREFIX + "/android_asset/";
     private static final String RESOURCE_PREFIX = ContentResolver.SCHEME_ANDROID_RESOURCE + "://";
 
     @Override
-    public Point init(Context context, Uri uri) throws Exception {
+    public Bitmap decode(Context context, Uri uri) throws Exception {
         String uriString = uri.toString();
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap bitmap;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
         if (uriString.startsWith(RESOURCE_PREFIX)) {
             Resources res;
             String packageName = uri.getAuthority();
@@ -54,48 +53,27 @@ public class SkiaImageRegionDecoder implements ImageRegionDecoder {
                 }
             }
 
-            decoder = BitmapRegionDecoder.newInstance(context.getResources().openRawResource(id), false);
+            bitmap = BitmapFactory.decodeResource(context.getResources(), id, options);
         } else if (uriString.startsWith(ASSET_PREFIX)) {
             String assetName = uriString.substring(ASSET_PREFIX.length());
-            decoder = BitmapRegionDecoder.newInstance(context.getAssets().open(assetName, AssetManager.ACCESS_RANDOM), false);
+            bitmap = BitmapFactory.decodeStream(context.getAssets().open(assetName), null, options);
         } else if (uriString.startsWith(FILE_PREFIX)) {
-            decoder = BitmapRegionDecoder.newInstance(uriString.substring(FILE_PREFIX.length()), false);
+            bitmap = BitmapFactory.decodeFile(uriString.substring(FILE_PREFIX.length()), options);
         } else {
             InputStream inputStream = null;
             try {
                 ContentResolver contentResolver = context.getContentResolver();
                 inputStream = contentResolver.openInputStream(uri);
-                decoder = BitmapRegionDecoder.newInstance(inputStream, false);
+                bitmap = BitmapFactory.decodeStream(inputStream, null, options);
             } finally {
                 if (inputStream != null) {
                     try { inputStream.close(); } catch (Exception e) { }
                 }
             }
         }
-        return new Point(decoder.getWidth(), decoder.getHeight());
-    }
-
-    @Override
-    public Bitmap decodeRegion(Rect sRect, int sampleSize) {
-        synchronized (decoderLock) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = sampleSize;
-            options.inPreferredConfig = Config.RGB_565;
-            Bitmap bitmap = decoder.decodeRegion(sRect, options);
-            if (bitmap == null) {
-                throw new RuntimeException("Skia image decoder returned null bitmap - image format may not be supported");
-            }
-            return bitmap;
+        if (bitmap == null) {
+            throw new RuntimeException("Skia image region decoder returned null bitmap - image format may not be supported");
         }
-    }
-
-    @Override
-    public boolean isReady() {
-        return decoder != null && !decoder.isRecycled();
-    }
-
-    @Override
-    public void recycle() {
-        decoder.recycle();
+        return bitmap;
     }
 }

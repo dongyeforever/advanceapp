@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<tk.dongye.advanceapp.view.LargeImageView
+    <!--<tk.dongye.advanceapp.view.image.sampling.ui.LargeImageView
         android:id="@+id/iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />-->
 
-    <tk.dongye.advanceapp.view.imageview.SubsamplingScaleImageView
+    <tk.dongye.advanceapp.view.image.SubsamplingScaleImageView
         android:id="@+id/iv_sampling"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

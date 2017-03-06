@@ -1,4 +1,4 @@
-package tk.dongye.advanceapp.view;
+package tk.dongye.advanceapp.view.image.sampling.ui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,7 +7,6 @@ import android.graphics.BitmapRegionDecoder;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +14,7 @@ import android.widget.ImageView;
 import java.io.IOException;
 import java.io.InputStream;
 
-import tk.dongye.advanceapp.util.LogUtil;
+import tk.dongye.advanceapp.view.image.sampling.ui.MoveGestureDetector;
 
 /**
  * description: 加载大图ImageView

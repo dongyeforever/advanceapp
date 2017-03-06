@@ -19,7 +19,7 @@
         <activity android:name=".view.ViewScrollDemo" />
 
         <!-- 大图加载 -->
-        <activity android:name=".ui.BitmapRegionDecoderAty">
+        <activity android:name=".view.image.sampling.ui.BitmapRegionDecoderAty">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,7 +37,11 @@
         </service>
         <service
             android:name="tk.dongye.advanceapp.aidl.BinderPoolService"
-            android:process=":bindpool" />
+            android:process=":bindpool" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

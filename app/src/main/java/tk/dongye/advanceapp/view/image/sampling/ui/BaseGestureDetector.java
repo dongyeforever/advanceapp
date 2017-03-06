@@ -1,4 +1,4 @@
-package tk.dongye.advanceapp.view;
+package tk.dongye.advanceapp.view.image.sampling.ui;
 
 import android.content.Context;
 import android.view.MotionEvent;

@@ -1,4 +1,4 @@
-package tk.dongye.advanceapp.view.imageview.decoder;
+package tk.dongye.advanceapp.view.image.sampling.decoder;
 
 /**
  * Interface for decoder (and region decoder) factories.
