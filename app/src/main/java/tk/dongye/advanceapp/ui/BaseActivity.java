@@ -37,8 +37,8 @@ public class BaseActivity extends AppCompatActivity {
         // 通过注解绑定控件
         ButterKnife.bind(this);
         init(savedInstanceState);
-        initView();
         initData();
+        initView();
 
     }
 

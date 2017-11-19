@@ -8,24 +8,24 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.BinderPoolAty">
-
-        </activity>
+        <activity android:name=".ui.BinderPoolAty" />
         <activity android:name=".ui.SurfaceViewAty" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ui.ServiceActivity" />
         <activity android:name=".view.ViewBaseActivity" />
-        <!-- View滑动冲突 -->
-        <activity android:name=".view.ViewScrollDemo" />
-
-        <!-- 大图加载 -->
-        <activity android:name=".view.image.sampling.ui.BitmapRegionDecoderAty">
+        <!-- 动画 -->
+        <activity android:name=".anim.BasicAnimationAty">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- View滑动冲突 -->
+        <activity android:name=".view.ViewScrollDemo" />
+
+        <!-- 大图加载 -->
+        <activity android:name=".view.image.sampling.ui.BitmapRegionDecoderAty" />
 
         <service
             android:name=".aidl.MyService"

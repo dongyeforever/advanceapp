@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />-->
 
-    <tk.dongye.advanceapp.view.image.SubsamplingScaleImageView
+    <tk.dongye.advanceapp.view.image.sampling.SubsamplingScaleImageView
         android:id="@+id/iv_sampling"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
